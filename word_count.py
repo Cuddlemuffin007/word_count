@@ -30,7 +30,7 @@ else:
 with open(filename) as my_file:
     contents = my_file.read()
 
-no_nos = ".,;:\"?!-"
+no_nos = ".,;:*~^()&%$#'\"/-1234567890?!"
 
 for no_no in no_nos:
     contents = contents.replace(no_no, '').lower()
