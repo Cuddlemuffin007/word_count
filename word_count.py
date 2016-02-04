@@ -28,21 +28,23 @@ else:
     exit(0)
 
 with open(filename) as my_file:
-    contents = my_file.read()
+    contents = my_file.read().lower()
 
-no_nos = ".,;:*~^()&%$#'\"/-1234567890?!"
+no_nos = ".,;:\"'-?!"
 
 for no_no in no_nos:
-    contents = contents.replace(no_no, '').lower()
+    contents = contents.replace(no_no, '')
 
 unique_words = set(contents.split())
 unique_words -= set(IGNORE)
-
+# print(unique_words)
 word_freq = {word: contents.count(word) for word in unique_words}
 
-ordered_result = []
-for word in sorted(word_freq, key=word_freq.get, reverse=True):
-    ordered_result.append((word, word_freq[word]))
+ordered_result = sorted(word_freq.items(), key=lambda x: x[1], reverse=True)
+for i in range(12, 32):
+    print(ordered_result[i][0], ordered_result[i][1])
 
-for i in range(20):
-    print((i+1), ordered_result[i][0], ordered_result[i][1])
+# print histogram
+print('One # = 8 occurrences')
+for i in range(12, 32):
+    print(ordered_result[i][0], "#"*(ordered_result[i][1]//8))
