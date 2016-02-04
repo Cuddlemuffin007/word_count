@@ -1,6 +1,6 @@
 # tiy day 3 exercise - word frequency program
 from sys import argv, exit
-
+import re
 IGNORE = ['a', 'able', 'about', 'across', 'after', 'all',
           'almost', 'also', 'am', 'among', 'an', 'and', 'any',
           'are', 'as', 'at', 'be', 'because', 'been', 'but',
@@ -30,21 +30,22 @@ else:
 with open(filename) as my_file:
     contents = my_file.read().lower()
 
-no_nos = ".,;:\"'-?!"
+clean_contents = re.split(r"\W+", contents.replace("'", ''))
 
-for no_no in no_nos:
-    contents = contents.replace(no_no, '')
-
-unique_words = set(contents.split())
+unique_words = set(clean_contents)
 unique_words -= set(IGNORE)
-# print(unique_words)
-word_freq = {word: contents.count(word) for word in unique_words}
 
+# print(unique_words)
+
+word_freq = {word: clean_contents.count(word) for word in unique_words}
 ordered_result = sorted(word_freq.items(), key=lambda x: x[1], reverse=True)
-for i in range(12, 32):
-    print(ordered_result[i][0], ordered_result[i][1])
+
+for i in range(20):
+    print(ordered_result[i][0] + (" "*(15-len(ordered_result[i][0]))),
+          ordered_result[i][1])
 
 # print histogram
-print('One # = 8 occurrences')
-for i in range(12, 32):
-    print(ordered_result[i][0], "#"*(ordered_result[i][1]//8))
+print('\nOne # = 7 occurrences\n')
+for i in range(20):
+    print(ordered_result[i][0] + (" "*(15-len(ordered_result[i][0]))),
+          "#"*(ordered_result[i][1]//7))
